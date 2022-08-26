@@ -2,6 +2,7 @@ package com.company.Controller;
 
 import com.company.Model.UserDTO;
 import com.company.Model.UserEntity;
+import com.company.Repository.DataRepository;
 import com.company.Services.A_ServiceImpl;
 import com.company.Services.Service_Impl;
 import org.slf4j.Logger;
@@ -35,6 +36,9 @@ public class Controller {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Autowired
+    private DataRepository dataRepository;
+
     @PostConstruct
     public void init(){
         log.info("PostConstruct call");
@@ -57,7 +61,27 @@ public class Controller {
         log.info("C: " + C);
         return "\n" + B.getOne() + "\n" + C.getOne();
     }
+    @GetMapping(value = "/first",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<UserEntity> getBy(@RequestParam String name,@RequestParam Long id){
+        log.info("http://192.168.0.104:8090/Main/findByNameAndId");
 
+        return dataRepository.findByNameAndId(name, id);
+    }
+    @GetMapping(value = "/second",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<UserEntity> getOr(@RequestParam String name,@RequestParam int salary){
+        log.info("http://192.168.0.104:8090/Main/findByNameOrSalaryGreaterThan");
+
+        return dataRepository.findByNameOrSalaryGreaterThan(name,salary);
+    }
+    @GetMapping(value = "/third",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<UserEntity> getOrder(@RequestParam String name,@RequestParam int salary){
+        log.info("http://192.168.0.104:8090/Main/findByNameOrSalaryGreaterThanOrderByIdDesc");
+
+        return dataRepository.findByNameOrSalaryGreaterThanOrderByIdDesc(name,salary);
+    }
     @PostMapping(value = "/set",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String setData(@RequestBody UserDTO userDTO){
