@@ -63,24 +63,31 @@ public class Controller {
     }
     @GetMapping(value = "/first",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<UserEntity> getBy(@RequestParam String name,@RequestParam Long id){
+    public List<UserEntity> getA(@RequestParam String name,@RequestParam Long id){
         log.info("http://192.168.0.104:8090/Main/findByNameAndId");
 
         return dataRepository.findByNameAndId(name, id);
     }
     @GetMapping(value = "/second",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<UserEntity> getOr(@RequestParam String name,@RequestParam int salary){
+    public List<UserEntity> getB(@RequestParam String name,@RequestParam int salary){
         log.info("http://192.168.0.104:8090/Main/findByNameOrSalaryGreaterThan");
 
         return dataRepository.findByNameOrSalaryGreaterThan(name,salary);
     }
     @GetMapping(value = "/third",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<UserEntity> getOrder(@RequestParam String name,@RequestParam int salary){
+    public List<UserEntity> getC(@RequestParam String name,@RequestParam int salary){
         log.info("http://192.168.0.104:8090/Main/findByNameOrSalaryGreaterThanOrderByIdDesc");
 
         return dataRepository.findByNameOrSalaryGreaterThanOrderByIdDesc(name,salary);
+    }
+    @GetMapping(value = "/four",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Long getD(@RequestParam Long id){
+        log.info("http://192.168.0.104:8090/Main/Long");
+
+        return dataRepository.getCount(id);
     }
     @PostMapping(value = "/set",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
