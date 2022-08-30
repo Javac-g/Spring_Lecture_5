@@ -15,4 +15,6 @@ public interface DataRepository extends JpaRepository<UserEntity,Long> {
 
     @Query("SELECT COUNT(de) FROM UserEntity de WHERE de.id > ?1")
     Long getCount(Long id);
+    @Query("SELECT de FROM UserEntity de WHERE de.salary > ?1")
+    List<UserEntity> getBySalary(int salary);
 }

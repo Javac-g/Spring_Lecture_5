@@ -85,9 +85,16 @@ public class Controller {
     @GetMapping(value = "/four",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Long getD(@RequestParam Long id){
-        log.info("http://192.168.0.104:8090/Main/Long");
+        log.info("http://192.168.0.104:8090/Main/four");
 
         return dataRepository.getCount(id);
+    }
+    @GetMapping(value = "/five",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<UserEntity>  getE(@RequestParam int salary){
+        log.info("http://192.168.0.104:8090/Main/five");
+
+        return dataRepository.getBySalary(salary);
     }
     @PostMapping(value = "/set",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
