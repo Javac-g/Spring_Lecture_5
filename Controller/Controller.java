@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequestMapping("/Main")
@@ -96,6 +97,31 @@ public class Controller {
 
         return dataRepository.getBySalary(salary);
     }
+    @GetMapping(value = "/six",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public List<UserEntity> getF(@RequestParam int salary){
+        log.info("http://192.168.0.104:8090/Main/six");
+        return dataRepository.getBySalaryNative(salary);
+    }
+    @Transactional
+    @RequestMapping(value = "/seven",method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String updateSalary(@RequestParam int salary, @RequestParam String name){
+        dataRepository.changeSalaryByName(salary, name);
+        return "Changed " + name + "'s Salary to -" + salary;
+    }
+//    @Transactional
+//    @RequestMapping(value = "/eight",method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    public void updateSalaryA(@RequestParam int salary, @RequestParam String name){
+////        List<UserEntity> UserEntities = dataRepository.findByName(name);
+////        for(UserEntity x : UserEntities){
+////            x.setSalary(salary);
+//
+//      }
+//
+//
+//    }
     @PostMapping(value = "/set",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String setData(@RequestBody UserDTO userDTO){
